@@ -97,7 +97,7 @@ python main.py --data_path ./data/processed_data.csv --model_name lg --type_obj 
 
 ***运行结果如下：***
 
-![result.png](data/result.png)
+![result.png](pic/result.png)
 
 ***结果图片展示：***
 
