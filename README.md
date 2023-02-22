@@ -100,6 +100,7 @@ python main.py --data_path ./data/processed_data.csv --model_name lg --type_obj 
 ![result.png](data/result.png)
 
 ***结果图片展示：***
+
 ![result_ml.png](pic/pic_ml.png)
 
 ### 3.2 **针对深度神经网络算法**
