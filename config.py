@@ -9,11 +9,15 @@
 @Desc    : None
 '''
 
-ML_MODEL_NAME = ['lg', 'knn', 'dt', 'rt', 'gbdt', 'xgb', 'catboost', 'svm', 'bayes']
+ML_MODEL_NAME = ['lg', 'knn', 'dt', 'rf', 'gbdt', 'xgb', 'catboost', 'svm', 'bayes']
 
 DL_MODEL_NAME = ['lstm', 'cnn', 'transformer']
 
 BATCH_SIZE = 8
+
+SPLIT_SIZE = 0.3
+
+IS_SAMPLE = True
 
 PIC_SAVED_PATH = './pic/' # result的pic图片保存的路径
 

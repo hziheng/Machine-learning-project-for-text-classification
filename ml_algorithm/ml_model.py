@@ -41,7 +41,7 @@ class ML_EXCUTER:
             model = SVC(kernel='rbf')
         elif self.model_name == 'dt':
             model = DecisionTreeClassifier(random_state=96)
-        elif self.model_name == 'rt':
+        elif self.model_name == 'rf':
             model = RandomForestClassifier(n_estimators=100, random_state=96)
         elif self.model_name == 'gbdt':
             model = GradientBoostingClassifier(

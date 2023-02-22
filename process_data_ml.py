@@ -28,16 +28,19 @@ class ML_Data_Excuter:
         """
         self.train_data_path = train_data_path
         self.test_data_path = test_data_path
-        if self.test_data_path and self.test_data_path:
+        if self.train_data_path and self.test_data_path:
             self.train_data = pd.read_csv(self.train_data_path)
             self.test_data = pd.read_csv(self.test_data_path)
             self.data = pd.concat([self.train_data, self.test_data], axis=0)
             self.l2i_dic, self.i2l_dic = self.create_l2i()
             self.label = self.data['label']
-            if len(self.label) > 2:
+            if len(set(self.label.values.tolist())) > 2:
                 self.mutil = True
-            else:
+            elif len(set(self.label.values.tolist())) == 2:
                 self.mutil = False
+            else:
+                print('there have only one label, must >= 2')
+                exit(0)
             self.X = self.data.loc[:, self.data.columns!='label']
             print('data nums: ')
             print(self.X.shape[0])
@@ -55,6 +58,13 @@ class ML_Data_Excuter:
             self.data = pd.read_csv(data_path)
             self.l2i_dic, self.i2l_dic = self.create_l2i()
             self.label = self.data['label']
+            if len(set(self.label.values.tolist())) > 2:
+                self.mutil = True
+            elif len(set(self.label.values.tolist())) == 2:
+                self.mutil = False
+            else:
+                print('there have only one label, must >= 2')
+                exit(0)
             self.X = self.data.loc[:, self.data.columns!='label']
             if is_sample:
                 self.sample()
@@ -87,11 +97,11 @@ class ML_Data_Excuter:
             return res_
         from collections import Counter
 
-        print('采样前，label的分布如下：')
+        print('before sample，data nums：')
         print(get_res())
         sample_excuter = RandomUnderSampler(random_state=96)
         self.X, self.label = sample_excuter.fit_resample(self.X, self.label)
-        print('采样后，label的分布如下：')
+        print('after sample，data nums：')
         print(get_res())
         self.data = pd.concat([self.X, self.label], axis=1)
 

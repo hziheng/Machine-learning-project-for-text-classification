@@ -14,49 +14,49 @@ from process_data_ml import ML_Data_Excuter
 from process_data_dl import DL_Data_Excuter
 from metrics import Matrix
 from model import Model_Excuter
-from config import ML_MODEL_NAME, DL_MODEL_NAME, BATCH_SIZE
+from config import ML_MODEL_NAME, DL_MODEL_NAME, BATCH_SIZE, SPLIT_SIZE, IS_SAMPLE
 from dl_algorithm.dl_config import DlConfig
 from trick.set_all_seed import set_seed
 import warnings
 
 warnings.filterwarnings("ignore")
 
-# def set_args():
-#     parser = argparse.ArgumentParser()
-#     parser.add_argument('--data_path', help='data path', default='./data/processed_data.csv', type=str)
-#     parser.add_argument('--model_name', help='model name ex: knn', default='lg', type=str)
-#     parser.add_argument('--model_saved_path', help='the path of model saved', default='./save_model/', type=str)
-#     parser.add_argument('--type_obj', help='need train or test or only predict', default='train', type=str)
-#     parser.add_argument('--train_data_path', help='train set', default='', type=str)
-#     parser.add_argument('--test_data_path', help='test set', default='', type=str)
-#     parser.add_argument('--dev_data_path', help='dev set', default='', type=str)
-#     args = parser.parse_args()
-#     return args
-
-
 def set_args():
-    # 训练代码
-    # python --model_name lstm --model_saved_path './save_model/ --type_obj 'train' -- train_data_path './data/dl_data/train.csv' --test_data_path './data/dl_data/test.csv'
-    # 测试代码
-    # python --model_name lstm --model_saved_path './save_model/ --type_obj 'test' --test_data_path './data/dl_data/test.csv'
-    # 预测代码
-    # python --model_name lstm --model_saved_path './save_model/ --type_obj 'predict' --dev_data_path './data/dl_data/dev.csv'
     parser = argparse.ArgumentParser()
-    parser.add_argument('--data_path', help='data path', default='', type=str)
-    parser.add_argument(
-        '--model_name', help='model name ex: knn', default='transformer', type=str)
-    parser.add_argument(
-        '--model_saved_path', help='the path of model saved', default='./save_model/', type=str)
-    parser.add_argument(
-        '--type_obj', help='need train or test or only predict', default='train', type=str)
-    parser.add_argument('--train_data_path',
-                        help='train set', default='./data/dl_data/test.csv', type=str)
-    parser.add_argument('--test_data_path',
-                        help='./data/dl_data/test.csv', default='./data/dl_data/dev.csv', type=str)
-    parser.add_argument('--dev_data_path', help='dev set',
-                        default='', type=str)
+    parser.add_argument('--data_path', help='data path', default='./data/processed_data.csv', type=str)
+    parser.add_argument('--model_name', help='model name ex: knn', default='lg', type=str)
+    parser.add_argument('--model_saved_path', help='the path of model saved', default='./save_model/', type=str)
+    parser.add_argument('--type_obj', help='need train or test or only predict', default='train', type=str)
+    parser.add_argument('--train_data_path', help='train set', default='', type=str)
+    parser.add_argument('--test_data_path', help='test set', default='', type=str)
+    parser.add_argument('--dev_data_path', help='dev set', default='', type=str)
     args = parser.parse_args()
     return args
+
+
+# def set_args():
+#     # 训练代码
+#     # python --model_name lstm --model_saved_path './save_model/ --type_obj 'train' -- train_data_path './data/dl_data/train.csv' --test_data_path './data/dl_data/test.csv'
+#     # 测试代码
+#     # python --model_name lstm --model_saved_path './save_model/ --type_obj 'test' --test_data_path './data/dl_data/test.csv'
+#     # 预测代码
+#     # python --model_name lstm --model_saved_path './save_model/ --type_obj 'predict' --dev_data_path './data/dl_data/dev.csv'
+#     parser = argparse.ArgumentParser()
+#     parser.add_argument('--data_path', help='data path', default='', type=str)
+#     parser.add_argument(
+#         '--model_name', help='model name ex: knn', default='transformer', type=str)
+#     parser.add_argument(
+#         '--model_saved_path', help='the path of model saved', default='./save_model/', type=str)
+#     parser.add_argument(
+#         '--type_obj', help='need train or test or only predict', default='train', type=str)
+#     parser.add_argument('--train_data_path',
+#                         help='train set', default='./data/dl_data/test.csv', type=str)
+#     parser.add_argument('--test_data_path',
+#                         help='./data/dl_data/test.csv', default='./data/dl_data/dev.csv', type=str)
+#     parser.add_argument('--dev_data_path', help='dev set',
+#                         default='', type=str)
+#     args = parser.parse_args()
+#     return args
 
 
 def print_msg(metrix_ex_train, metrix_ex_test, data_ex):
@@ -100,7 +100,7 @@ def main(args):
 
     if args.type_obj == 'train':
         if args.model_type == 'ML':
-            data_ex = ML_Data_Excuter(args.data_path, split_size=0.3, is_sample=True,
+            data_ex = ML_Data_Excuter(args.data_path, split_size=SPLIT_SIZE, is_sample=IS_SAMPLE,
                                       split=True, train_data_path='', test_data_path='')
             # 初始化模型
             model_ex = Model_Excuter().init(model_name=args.model_name)
