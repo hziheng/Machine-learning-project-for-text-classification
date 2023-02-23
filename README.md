@@ -131,5 +131,5 @@ python main.py --data_path ./data/processed_data.csv --model_name lg --type_obj 
 20. 其他深度网络（todo
     1.  lstm
     2.  cnn
-    3.  
+    3.  transformer
 21. 英文文本的分类（主要是分词在哪里方便修改）todo
