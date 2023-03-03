@@ -16,11 +16,7 @@ from dl_algorithm.dl_model import DL_EXCUTER
 class Model_Excuter:
     def __init__(self):
         pass
-    # def init(self, model_name):
-    #     if model_name in ML_MODEL_NAME:
-    #         return ML_EXCUTER(model_name)
-    #     elif model_name in DL_MODEL_NAME:
-    #         return DL_EXCUTER(model_name)
+
     def init(self, model_name='', dl_config=''):
         if model_name in ML_MODEL_NAME:
             return ML_EXCUTER(model_name)

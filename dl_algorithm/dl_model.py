@@ -20,6 +20,7 @@ from config import DL_MODEL_NAME, VERBOSE
 from dl_algorithm.lstm import LSTM
 from dl_algorithm.cnn import TextCNN
 from dl_algorithm.transformer import TransformerModel
+from dl_algorithm.capsules_model import capsules_model
 from trick.init_model import init_network
 from trick.early_stop import EarlyStopping
 from common import get_time_dif
@@ -38,6 +39,8 @@ class DL_EXCUTER:
             self.model = TextCNN(self.dlconfig)
         elif self.dlconfig.model_name == 'transformer':
             self.model = TransformerModel(self.dlconfig)
+        elif self.dlconfig.model_name == 'capsules':
+            self.model = capsules_model(self.dlconfig)
         #! 其他模型
         else:
             pass
@@ -145,7 +148,7 @@ class DL_EXCUTER:
                 pre_all.append(pred.softmax(-1).detach().cpu().numpy())
         pre_all = np.concatenate(pre_all)
         pre_all = np.argmax(pre_all, axis=-1)
-        if self.dlconfig.loss_type == 'mutil':
+        if self.dlconfig.loss_type == 'mutil' or self.dlconfig.loss_type == 'marginLoss':
             mutil = True
         else:
             mutil = False

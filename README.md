@@ -10,9 +10,11 @@
   - [**前提准备** ](#前提准备-)
     - [**环境安装**](#环境安装)
   - [**具体使用方法** ](#具体使用方法-)
+    - [数据集github传不上来，请移步 数据集下载，下载后直接解压到根目录即可](#数据集github传不上来请移步-数据集下载下载后直接解压到根目录即可)
     - [3. **参数介绍**](#3-参数介绍)
     - [3.1 **针对常见的机器学习算法**](#31-针对常见的机器学习算法)
     - [3.2 **针对深度神经网络算法**](#32-针对深度神经网络算法)
+    - [Note：](#note)
   - [文件目录介绍](#文件目录介绍)
   - [开发日志](#开发日志)
 
@@ -35,7 +37,7 @@
 - Catboost
 - SVM
 - Bayes
-- 待补充
+- todo...
 
 
 #### 2.2 常见的深度学习算法
@@ -43,7 +45,7 @@
 - TextCNN
 - Bi-LSTM
 - Transformer
-- 待补充
+- Capsules
 
 
 ---
@@ -65,6 +67,11 @@ pip install -r requestments.txt
 
 
 ## **具体使用方法** <a name = "具体使用方法"></a>
+<br>
+
+### 数据集github传不上来，请移步 [数据集下载](https://pan.baidu.com/s/1_2qhpb4eRbraFAShSoPVhQ?pwd=c4n6)，下载后直接解压到根目录即可
+<br>
+
 ### 3. **参数介绍**
 ***主程序：main.py，其中各个参数的含义如下：***
 
@@ -105,31 +112,34 @@ python main.py --data_path ./data/processed_data.csv --model_name lg --type_obj 
 
 ### 3.2 **针对深度神经网络算法**
 
-***终端命令如下：***
+
+***示例***
+
+```
+# 训练代码
+# python --model_name lstm --model_saved_path './save_model/ --type_obj 'train' -- train_data_path './data/dl_data/train.csv' --test_data_path './data/dl_data/test.csv'
+# 测试代码
+# python --model_name lstm --model_saved_path './save_model/ --type_obj 'test' --test_data_path './data/dl_data/test.csv'
+# 预测代码
+# python --model_name lstm --model_saved_path './save_model/ --type_obj 'predict' --dev_data_path './data/dl_data/dev.csv'
+```
+***运行结果如下：***
+
+![result2.png](pic/pic_dl.png)
+***结果图片展示：***
+
+由于采用的数据是多分类，画的图比较乱，多分类暂时不输出图
+
+### Note：
+>> **常见的机器学习算法调参在 ml_algorithm/ml_moel.py下<br>深度神经网络调参在 dl_algorithm/dl_config.py下<br>其他全局参数调参在 ./config.py下**
+
 ## 文件目录介绍
 
 ## 开发日志
-1. 优化读取文件（增加用户指定训练集和测试集位置）
-2. 区分DL和ML模型的构建
-3. DL模型的参数文件撰写
-4. 处理DL的数据集兼容整体的DATAloader通用方法
-5. plt.show阻塞问题，换成显示1S，然后保存在当前目录下
-6. 深度学习中数据的处理（转换id，构建词表）
-7. dataset构建
-8. lstm代码完成
-9. 模型权重初始化代码
-10. 模型训练代码
-11. 模型评估代码
-12. 早停trick
-13. 参数优化
-14. lstm 输出bug
-15. dl_model test的代码
-16. dl_model predict的代码
-17. main函数的ML和DL的test和predict代码
-18. 词向量的载入
-19. 深度学习，单个数据集输入的话，如何自动下采样和划分数据集（todo
-20. 其他深度网络（todo
-    1.  lstm
-    2.  cnn
-    3.  transformer
-21. 英文文本的分类（主要是分词在哪里方便修改）todo
+|已添加的机器学习相关算法|已添加深度学习相关算法添加|其他功能新增或优化|
+|:-|:-|:-|
+|1. LogisticRegression<br> 2.KNN<br>3. DecisionTree<br>4. SVM|1. TextCNN<br>2. Bi-Lstm<br>3. Transfomer<br>4. Capsules # 按照17的论文直接改过来的，论文是图片分类，直接改成文本分类效果特别差，18年出了一篇基于胶囊网络的文本分类的论文，还没有看如何实现（**todo**）|1. 优化读取文件（增加用户指定训练集和测试集位置）<br> 2. 区分DL和ML模型的构建<br>3. DL模型的参数文件撰写<br>4. 处理DL的数据集兼容整体的DATAloader通用方法|
+|5.GaussianNB<br>6. RandomForest<br>7. GBDT<br>8. XGBOOST||5. plt.show阻塞问题，换成显示1S，然后保存在当前目录下<br>6. 深度学习中数据的处理（转换id，构建词表）<br>7. dataset类构建<br>8. 添加3种模型权重初始化代码|
+|9. CatBOOST||9. 模型训练代码<br>10. 模型评估代码<br>11. 添加早停机制<br>12. 参数优化|
+|||13. 解决Lstm的输出bug<br>14. 完成test,predict模块<br>15. main函数优化<br>16. 新增预训练词向量的载入功能|
+|||17. 深度学习下，输入单个数据集，自动进行数据切分及下采样，无需人工划分和采样（**todo**）<br>18. 英文文本分类待添加，主要体现在分词部分（**todo**）|

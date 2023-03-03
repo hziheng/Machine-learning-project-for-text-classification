@@ -11,7 +11,7 @@
 
 ML_MODEL_NAME = ['lg', 'knn', 'dt', 'rf', 'gbdt', 'xgb', 'catboost', 'svm', 'bayes']
 
-DL_MODEL_NAME = ['lstm', 'cnn', 'transformer']
+DL_MODEL_NAME = ['lstm', 'cnn', 'transformer', 'capsules']
 
 BATCH_SIZE = 8
 

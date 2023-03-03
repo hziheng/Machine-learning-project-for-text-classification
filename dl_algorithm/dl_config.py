@@ -11,10 +11,11 @@
 
 import torch
 from process_data_dl import DataSetProcess
+from dl_algorithm.capsules_model import MarginLoss
 
 class DlConfig:
     """
-    model_name: LSTM, CNN, Transformer, ...
+    model_name: LSTM, CNN, Transformer, capsules...
     """
 
     def __init__(self, model_name, vocab_size, label2id_nums, vocab_dict):
@@ -35,7 +36,7 @@ class DlConfig:
         self.learning_rate = 1e-3
         self.update_lr = False
         self.warmup_prop = 0.1 # 学习率更新策略系数
-        self.loss_type = 'mutil' # 'binary, regression'
+        self.loss_type = 'marginLoss' # 'binary, regression, marginLoss, multi'
         self.judge_loss_fct()
         self.create_special_params()
     
@@ -53,11 +54,18 @@ class DlConfig:
             self.n_layers = 2 # encoder里有几个transformer
             self.hidden = 1024
             self.d_model = self.embedding_size
+        elif self.model_name == 'capsules':
+            # 注意：self.in_d * self.reshape_num = 256
+            self.in_d = 8
+            self.reshape_num = 32
+            self.out_d = 16
+            self.iter = 3 # cij 的迭代次数
+            self.pad_size = 0
         else:
             pass
 
     def judge_loss_fct(self):
-        if self.loss_type == 'mutil':
+        if self.loss_type == 'multi':
             # torch.nn.CrossEntropyLoss(input, target)的input是没有归一化的每个类的得分，而不是softmax之后的分布
             # target是：类别的序号。形如 target = [1, 3, 2]
             self.loss_fct = torch.nn.CrossEntropyLoss()
@@ -65,6 +73,8 @@ class DlConfig:
             self.loss_fct = torch.nn.BCELoss()
         elif self.loss_type == 'regression':
             self.loss_fct = torch.nn.MSELoss()
+        elif self.loss_type == 'marginLoss':
+            self.loss_fct = MarginLoss()
         else:
             #! 这里自定义loss函数
             pass
