@@ -1,3 +1,4 @@
 # .gitignore
 data/
 */__pycache__
+visualization_data.ipynb
