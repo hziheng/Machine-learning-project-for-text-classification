@@ -206,9 +206,9 @@ class DL_Data_Excuter:
         pad_index = self.vocab['<PAD>']
         self.label_dic, self.i2l_dic = p.build_label2id(save=True)
         if len(self.label_dic) > 2:
-            self.mutil = True
+            self.multi = True
         else:
-            self.mutil = False
+            self.multi = False
         collater_fn = collater(pad_index)
         self.train_data_loader = ''
         self.test_data_loader = ''

@@ -148,11 +148,11 @@ class DL_EXCUTER:
                 pre_all.append(pred.softmax(-1).detach().cpu().numpy())
         pre_all = np.concatenate(pre_all)
         pre_all = np.argmax(pre_all, axis=-1)
-        if self.dlconfig.loss_type == 'mutil' or self.dlconfig.loss_type == 'marginLoss':
-            mutil = True
+        if self.dlconfig.loss_type == 'multi' or self.dlconfig.loss_type == 'marginLoss':
+            multi = True
         else:
-            mutil = False
-        matrix = Matrix(true_all, pre_all, mutil=mutil)
+            multi = False
+        matrix = Matrix(true_all, pre_all, multi=multi)
         return avg_test_loss, matrix.get_f1(), pre_all, true_all
 
 

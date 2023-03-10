@@ -32,11 +32,11 @@ class DlConfig:
             self.embedding_size = dim
         self.device = 'cuda' if torch.cuda.is_available() else 'cpu'
         self.dropout = 0.5
-        self.epochs = 10
+        self.epochs = 5
         self.learning_rate = 1e-3
         self.update_lr = False
         self.warmup_prop = 0.1 # 学习率更新策略系数
-        self.loss_type = 'marginLoss' # 'binary, regression, marginLoss, multi'
+        self.loss_type = 'multi' # 'binary, regression, marginLoss, multi'
         self.judge_loss_fct()
         self.create_special_params()
     

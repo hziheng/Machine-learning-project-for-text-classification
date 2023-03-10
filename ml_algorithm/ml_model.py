@@ -10,7 +10,9 @@
 '''
 
 import pickle
+import random
 import os
+import joblib
 import catboost as cb
 from sklearn.linear_model import LogisticRegression
 from sklearn.tree import DecisionTreeClassifier
@@ -105,15 +107,17 @@ class ML_EXCUTER:
         if not os.path.exists(path):
             os.makedirs(path)
         output_path = os.path.join(path, name)
-        with open(output_path, 'wb') as f:
-            pickle.dump(self.model, f)
+        # with open(output_path, 'wb') as f:
+        #     pickle.dump(self.model, f)
+        joblib.dump(self.model, output_path)
         print(f'model is saved, in {str(output_path)}')
 
     def load_model(self, path, name):
         output_path = os.path.join(path, name)
         try:
-            with open(output_path, 'rb') as f:
-                self.model = pickle.load(f)
+            # with open(output_path, 'rb') as f:
+            #     self.model = pickle.load(f)
+            self.model = joblib.load(output_path)
             print('model is load')
         except:
             print('model load fail, check path')
