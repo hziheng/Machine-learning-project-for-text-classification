@@ -117,11 +117,11 @@ python main.py --data_path ./data/processed_data.csv --model_name lg --type_obj 
 
 ```
 # 训练代码
-# python --model_name lstm --model_saved_path './save_model/ --type_obj 'train' -- train_data_path './data/dl_data/train.csv' --test_data_path './data/dl_data/test.csv'
+# python main.py --model_name lstm --model_saved_path ./save_model/ --type_obj train --train_data_path ./data/dl_data/test.csv --test_data_path ./data/dl_data/dev.csv
 # 测试代码
-# python --model_name lstm --model_saved_path './save_model/ --type_obj 'test' --test_data_path './data/dl_data/test.csv'
+# python main.py --model_name lstm --model_saved_path ./save_model/ --type_obj test --test_data_path ./data/dl_data/test.csv
 # 预测代码
-# python --model_name lstm --model_saved_path './save_model/ --type_obj 'predict' --dev_data_path './data/dl_data/dev.csv'
+# python main.py --model_name lstm --model_saved_path './save_model/ --type_obj predict --dev_data_path ./data/dl_data/dev.csv
 ```
 ***运行结果如下：***
 

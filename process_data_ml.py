@@ -35,9 +35,9 @@ class ML_Data_Excuter:
             self.l2i_dic, self.i2l_dic = self.create_l2i()
             self.label = self.data['label']
             if len(set(self.label.values.tolist())) > 2:
-                self.mutil = True
+                self.multi = True
             elif len(set(self.label.values.tolist())) == 2:
-                self.mutil = False
+                self.multi = False
             else:
                 print('there have only one label, must >= 2')
                 exit(0)
@@ -59,9 +59,9 @@ class ML_Data_Excuter:
             self.l2i_dic, self.i2l_dic = self.create_l2i()
             self.label = self.data['label']
             if len(set(self.label.values.tolist())) > 2:
-                self.mutil = True
+                self.multi = True
             elif len(set(self.label.values.tolist())) == 2:
-                self.mutil = False
+                self.multi = False
             else:
                 print('there have only one label, must >= 2')
                 exit(0)
@@ -77,7 +77,8 @@ class ML_Data_Excuter:
         i2l_dic = OrderedDict()
         l2i_dic = OrderedDict()
         # 将label转成数字，并且生成有序字典，方便后续画confusion_matrix
-        classes = list(set(self.data['label'].values.tolist()))
+        classes = sorted(list(set(self.data['label'].values.tolist())))
+        print(classes)
         num_classes = len(set(classes))
         for i in range(num_classes):
             i2l_dic[i] = classes[i]

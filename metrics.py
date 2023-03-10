@@ -19,37 +19,37 @@ from config import PIC_SAVED_PATH
 
 
 class Matrix:
-    def __init__(self, y_true, y_pre, mutil=False):
+    def __init__(self, y_true, y_pre, multi=False):
         self.true = y_true
         self.pre = y_pre
         # 是否是多分类, 默认二分类
-        self.mutil = mutil # average的参数有micro、macro、weighted,如果选择micro,那么recall和pre和acc没区别，建议使用macro，同时数据集最好已经没有不平衡的问题
+        self.multi = multi # average的参数有micro、macro、weighted,如果选择micro,那么recall和pre和acc没区别，建议使用macro，同时数据集最好已经没有不平衡的问题
 
     def get_acc(self):
         return accuracy_score(self.true, self.pre)
 
     def get_recall(self):
         # tp / (tp + fn)
-        if self.mutil:
+        if self.multi:
             return recall_score(self.true, self.pre, average='macro')
         return recall_score(self.true, self.pre)
     
     def get_precision(self):
         # tp / (tp + fp)
-        if self.mutil:
+        if self.multi:
             return precision_score(self.true, self.pre, average='macro')
         return precision_score(self.true, self.pre)
 
     def get_f1(self):
         # F1 = 2 * (precision * recall) / (precision + recall)
-        if self.mutil:
+        if self.multi:
             return f1_score(self.true, self.pre, average='macro')
         return f1_score(self.true, self.pre)
 
     def get_confusion_matrix(self):
         return confusion_matrix(self.true, self.pre)
 
-    def plot_confusion_matrix(self, dic_labels):
+    def plot_confusion_matrix(self, dic_labels, pic_name):
         """plot
 
         Args:
@@ -104,10 +104,10 @@ class Matrix:
         plt.show(block=False)
         if not os.path.exists(PIC_SAVED_PATH):
             os.makedirs(PIC_SAVED_PATH)
-        save_path = os.path.join(PIC_SAVED_PATH, 'pic.png')
+        pic_name = pic_name + '.png'
+        save_path = os.path.join(PIC_SAVED_PATH, pic_name)
         plt.savefig(save_path)
-        print(f'result pic is saved in {PIC_SAVED_PATH}')
-        
+        print(f'result pic is saved in {save_path}')
 
 
 if __name__ == '__main__':
@@ -121,7 +121,7 @@ if __name__ == '__main__':
                     [0]*40 + [1]*160 + [2]*40 + 
                     [0]*5 + [1]*5 + [2]*20)
     dic_labels = {0:0, 1:1, 2:2}
-    matrix_excute = Matrix(y_true=y_true, y_pre=y_pred, mutil=True)
+    matrix_excute = Matrix(y_true=y_true, y_pre=y_pred, multi=True)
     print(matrix_excute.get_acc())
     print(matrix_excute.get_precision())
     print(matrix_excute.get_recall())
