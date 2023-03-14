@@ -1,13 +1,19 @@
-# -*- coding: utf-8 -*-
-# -------------------------------------------------------------------------------
-# Description:
-# Author: hzh
-# Date:   2022/9/16
-# -------------------------------------------------------------------------------
-from transformers import BertPreTrainedModel, BertModel
-import torch.nn as nn
+# !usr/bin/env python
+# -*- coding:utf-8 -*-
+
+'''
+ Author       : Huang zh
+ Email        : jacob.hzh@qq.com
+ Date         : 2023-03-12 14:39:21
+ LastEditTime : 2023-03-14 15:12:46
+ FilePath     : \\codes\\pretrain_algorithm\\bert_graph.py
+ Description  : 
+'''
+
+
 import torch
-from torch.nn import CrossEntropyLoss
+import torch.nn as nn
+from transformers import BertPreTrainedModel, BertModel
 
 
 class bert_classifier(BertPreTrainedModel):
