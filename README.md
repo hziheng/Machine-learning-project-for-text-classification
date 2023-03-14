@@ -7,6 +7,7 @@
     - [2. 目前已经涵盖的算法](#2-目前已经涵盖的算法)
       - [2.1 常见的机器学习算法](#21-常见的机器学习算法)
       - [2.2 常见的深度学习算法](#22-常见的深度学习算法)
+      - [2.3 预训练模型](#23-预训练模型)
   - [前提准备 ](#前提准备-)
     - [环境安装](#环境安装)
   - [具体使用方法 ](#具体使用方法-)
@@ -14,6 +15,7 @@
     - [3. 参数介绍](#3-参数介绍)
     - [3.1 针对常见的机器学习算法](#31-针对常见的机器学习算法)
     - [3.2 针对深度神经网络算法](#32-针对深度神经网络算法)
+    - [3.3 针对预训练模型](#33-针对预训练模型)
     - [Note：](#note)
   - [文件目录介绍](#文件目录介绍)
   - [开发日志](#开发日志)
@@ -46,8 +48,14 @@
 - Bi-LSTM
 - Transformer
 - Capsules
+- todo...
 
-
+#### 2.3 预训练模型
+- Bert
+- MacBert
+- NEZHA_WWM
+- RoBerta
+- todo...
 ---
 
 
@@ -135,8 +143,16 @@ python main.py --dev_data_path ./data/processed_data.csv --model_saved_path ./sa
 
 由于采用的数据是多分类，画的图比较乱，多分类暂时不输出图
 
+
+### 3.3 针对预训练模型
+***示例***
+```
+# 训练
+# 测试
+# 预测
+```
 ### Note：
->> **常见的机器学习算法调参在 ml_algorithm/ml_moel.py下<br>深度神经网络调参在 dl_algorithm/dl_config.py下<br>其他全局参数调参在 ./config.py下**
+>> **常见的机器学习算法调参在 ml_algorithm/ml_moel.py下<br>深度神经网络/预训练模型的调参在 dl_algorithm/dl_config.py下<br>其他全局参数调参在 ./config.py下<br>从transformers官网下载的预训练模型放在pretrain_model/下**
 
 ## 文件目录介绍
 
@@ -144,7 +160,8 @@ python main.py --dev_data_path ./data/processed_data.csv --model_saved_path ./sa
 |已添加的机器学习相关算法|已添加深度学习相关算法添加|其他功能新增或优化|
 |:-|:-|:-|
 |1. LogisticRegression<br> 2.KNN<br>3. DecisionTree<br>4. SVM|1. TextCNN<br>2. Bi-Lstm<br>3. Transfomer<br>4. Capsules # 按照17的论文直接改过来的，论文是图片分类，直接改成文本分类效果特别差，18年出了一篇基于胶囊网络的文本分类的论文，还没有看如何实现（**todo**）|1. 优化读取文件（增加用户指定训练集和测试集位置）<br> 2. 区分DL和ML模型的构建<br>3. DL模型的参数文件撰写<br>4. 处理DL的数据集兼容整体的DATAloader通用方法|
-|5.GaussianNB<br>6. RandomForest<br>7. GBDT<br>8. XGBOOST||5. plt.show阻塞问题，换成显示1S，然后保存在当前目录下<br>6. 深度学习中数据的处理（转换id，构建词表）<br>7. dataset类构建<br>8. 添加3种模型权重初始化代码|
+|5.GaussianNB<br>6. RandomForest<br>7. GBDT<br>8. XGBOOST|5. Bert<br>6. Mac_bert<br>7. NEZHA_WWM<br>8. RoBerta_WWM|5. plt.show阻塞问题，换成显示1S，然后保存在当前目录下<br>6. 深度学习中数据的处理（转换id，构建词表）<br>7. dataset类构建<br>8. 添加3种模型权重初始化代码|
 |9. CatBOOST||9. 模型训练代码<br>10. 模型评估代码<br>11. 添加早停机制<br>12. 参数优化|
 |||13. 解决Lstm的输出bug<br>14. 完成test,predict模块<br>15. main函数优化<br>16. 新增预训练词向量的载入功能|
-|||17. 深度学习下，输入单个数据集，自动进行数据切分及下采样，无需人工划分和采样（**todo**）<br>18. 英文文本分类待添加，主要体现在分词部分（**todo**）|
+|||17. 深度学习下，输入单个数据集，自动进行数据切分及下采样，无需人工划分和采样（**todo**）<br>18. 英文文本分类待添加，主要体现在分词部分（**todo**）<br>19. 添加竞赛trick【FGM、PGD、EMA】策略<br>20. 添加竞赛trick【将bert的cls输出修改为中间多层embed的输出加权平均，详情看bert_graph.py|
+|||21. 所有代码的关键地方添加注释，方便理解修改代码|
