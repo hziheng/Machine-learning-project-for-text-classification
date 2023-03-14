@@ -13,6 +13,8 @@ ML_MODEL_NAME = ['lg', 'knn', 'dt', 'rf', 'gbdt', 'xgb', 'catboost', 'svm', 'bay
 
 DL_MODEL_NAME = ['lstm', 'cnn', 'transformer', 'capsules']
 
+PRE_MODEL_NAME = ['bert']
+
 BATCH_SIZE = 8
 
 SPLIT_SIZE = 0.3

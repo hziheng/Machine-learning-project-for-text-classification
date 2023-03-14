@@ -105,7 +105,7 @@ class DL_EXCUTER:
                 else:
                     lr = self.dlconfig.learning_rate
                 tqdm.write(
-                    f"Epoch {epoch + 1:02d}/{self.dlconfig.epochs:02d} \t t={elapsed_time} \t"
+                    f"Epoch {epoch + 1:02d}/{self.dlconfig.epochs:02d} \t time={elapsed_time} \t"
                     f"loss={avg_loss:.3f}\t lr={lr:.1e}",
                     end="\t",
                 )

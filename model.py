@@ -9,9 +9,10 @@
 @Desc    : None
 '''
 
-from config import ML_MODEL_NAME, DL_MODEL_NAME
+from config import ML_MODEL_NAME, DL_MODEL_NAME, PRE_MODEL_NAME
 from ml_algorithm.ml_model import ML_EXCUTER
 from dl_algorithm.dl_model import DL_EXCUTER
+from pretrain_algorithm.pre_model import PRE_EXCUTER
 
 class Model_Excuter:
     def __init__(self):
@@ -22,3 +23,5 @@ class Model_Excuter:
             return ML_EXCUTER(model_name)
         elif dl_config.model_name in DL_MODEL_NAME:
             return DL_EXCUTER(dl_config)
+        elif dl_config.model_name in PRE_MODEL_NAME:
+            return PRE_EXCUTER(dl_config)

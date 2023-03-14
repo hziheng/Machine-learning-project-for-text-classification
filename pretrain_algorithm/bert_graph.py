@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 # -------------------------------------------------------------------------------
-# Description:  
+# Description:
 # Author: hzh
 # Date:   2022/9/16
 # -------------------------------------------------------------------------------
@@ -10,7 +10,7 @@ import torch
 from torch.nn import CrossEntropyLoss
 
 
-class bert_classify(BertPreTrainedModel):
+class bert_classifier(BertPreTrainedModel):
     '''
     pooler_output：shape是(batch_size, hidden_size)，这是序列的第一个token (cls) 的最后一层的隐藏状态，
     它是由线性层和Tanh激活函数进一步处理的，
@@ -36,19 +36,9 @@ class bert_classify(BertPreTrainedModel):
         self.classifier = nn.Linear(config.hidden_size, self.num_labels)
         self.init_weights()
 
-    def forward(
-            self,
-            input_ids=None,
-            attention_mask=None,
-            token_type_ids=None,
-            labels=None,
-    ):
+    def forward(self, input_ids=None, attention_mask=None, token_type_ids=None, labels=None,):
         outputs = self.bert(
-            input_ids,
-            attention_mask=attention_mask,
-            token_type_ids=token_type_ids,
-
-        )
+            input_ids, attention_mask=attention_mask, token_type_ids=token_type_ids)
         '''
         bert的输出
         # output[0] 最后一层的隐藏状态 （batch_size, sequence_length, hidden_size)
@@ -62,22 +52,16 @@ class bert_classify(BertPreTrainedModel):
             [self.dropout(layer[:, 0, :]) for layer in hidden_layers], dim=0
         )
         # 然后加权求和 shape: bathsize*hidden_size
-        cls_output = (torch.softmax(self.layer_weights, dim=0).unsqueeze(-1).unsqueeze(-1) * cls_outputs).sum(0)
+        cls_output = (torch.softmax(self.layer_weights,
+                      dim=0).unsqueeze(-1).unsqueeze(-1) * cls_outputs).sum(0)
         # 对求和后的cls向量进行dropout，在输入线性层，重复五次，然后求平均的到最后的输出logit
         logits = torch.mean(
             torch.stack(
-                [self.classifier(self.high_dropout(cls_output)) for _ in range(5)],
+                [self.classifier(self.high_dropout(cls_output))
+                 for _ in range(5)],
                 dim=0,
             ),
             dim=0,
         )
 
-        outputs = (logits,) + outputs[2:]
-        if labels is not None:
-            loss_fct = CrossEntropyLoss()
-            loss1 = loss_fct(logits.view(-1, self.num_labels), labels.view(-1))
-            loss = loss1
-
-            outputs = (loss.mean(),) + outputs  # loss, logits, output[2:]
-
-        return outputs
+        return logits

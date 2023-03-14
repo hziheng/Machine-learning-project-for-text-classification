@@ -167,8 +167,7 @@ class DLDataset(Dataset):
     """
 
     def __init__(self, contents):
-        self.contents = contents
-        self.data, self.label = self.get_data_label()
+        self.data, self.label = self.get_data_label(contents)
         self.len = len(self.data)
 
     def __len__(self):
@@ -183,12 +182,12 @@ class DLDataset(Dataset):
         else:
             return {'input_ids': self.data[index]}
 
-    def get_data_label(self):
+    def get_data_label(self, contents):
         """contents: [([xx,x,,], label?), ()]
         """
         data = []
         label = []
-        for i in self.contents:
+        for i in contents:
             data.append(i[0])
             if len(i) == 2:
                 label.append(i[1])
