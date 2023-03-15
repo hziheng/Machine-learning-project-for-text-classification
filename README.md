@@ -164,4 +164,4 @@ python main.py --dev_data_path ./data/processed_data.csv --model_saved_path ./sa
 |9. CatBOOST||9. 模型训练代码<br>10. 模型评估代码<br>11. 添加早停机制<br>12. 参数优化|
 |||13. 解决Lstm的输出bug<br>14. 完成test,predict模块<br>15. main函数优化<br>16. 新增预训练词向量的载入功能|
 |||17. 深度学习下，输入单个数据集，自动进行数据切分及下采样，无需人工划分和采样（**todo**）<br>18. 英文文本分类待添加，主要体现在分词部分（**todo**）<br>19. 添加竞赛trick【FGM、PGD、EMA】策略<br>20. 添加竞赛trick【将bert的cls输出修改为中间多层embed的输出加权平均，详情看bert_graph.py|
-|||21. 所有代码的关键地方添加注释，方便理解修改代码|
+|||21. 所有代码的关键地方添加注释，方便理解修改代码<br>完善readme文档|
