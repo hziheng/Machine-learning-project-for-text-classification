@@ -5,7 +5,7 @@
  Author       : Huang zh
  Email        : jacob.hzh@qq.com
  Date         : 2023-03-13 17:10:12
- LastEditTime : 2023-03-14 20:05:58
+ LastEditTime : 2023-03-15 11:46:10
  FilePath     : \\codes\\pretrain_algorithm\\pre_model.py
  Description  : 
 '''
@@ -200,14 +200,14 @@ class PRE_EXCUTER:
             shutil.copy(f'{self.dlconfig.pretrain_file_path}/config.json', f'{path}/config.json')
         if not os.path.exists(os.path.join(path, 'vocab.txt')):
             shutil.copy(f'{self.dlconfig.pretrain_file_path}/vocab.txt', f'{path}/vocab.txt')
-        name = 'pytorch.bin'
+        name = 'pytorch_model.bin'
         output_path = os.path.join(path, name)
         torch.save(self.model.state_dict(), output_path)
         print(f'model is saved, in {str(output_path)}')
 
     def load_model(self, path):
         try:
-            self.model = self.judge_model(path)
+            self.judge_model(path)
             self.model.eval()
             print('model 已加载预训练参数')
         except:
