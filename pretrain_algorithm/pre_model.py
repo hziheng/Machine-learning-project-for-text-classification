@@ -5,7 +5,7 @@
  Author       : Huang zh
  Email        : jacob.hzh@qq.com
  Date         : 2023-03-13 17:10:12
- LastEditTime : 2023-03-13 20:42:09
+ LastEditTime : 2023-03-14 20:05:58
  FilePath     : \\codes\\pretrain_algorithm\\pre_model.py
  Description  : 
 '''
@@ -29,17 +29,14 @@ from trick.fgm_pgd_ema import FGM
 class PRE_EXCUTER:
     def __init__(self, dl_config):
         self.dlconfig = dl_config
-        self.pre_config.num_labels = self.dlconfig.nums_label
 
     def judge_model(self, assign_path=''):
-        if assign_path:
-            load_path = assign_path
-        else:
-            load_path = self.dlconfig.pretrain_file_path
+        load_path = assign_path
         if self.dlconfig.model_name not in PRE_MODEL_NAME:
             print('pretrain model name is not support, please see PRE_MODEL_NAME of config.py')
         if self.dlconfig.model_name == 'bert':
             self.pre_config = BertConfig.from_pretrained(os.path.join(load_path, 'config.json'))
+            self.pre_config.num_labels = self.dlconfig.nums_label
             self.model = bert_classifier.from_pretrained(os.path.join(
                 load_path, 'pytorch_model.bin'), config=self.pre_config)
         #! 其他模型
@@ -85,11 +82,12 @@ class PRE_EXCUTER:
             avg_loss = 0
             first_epoch_eval = 0
             for data in tqdm(train_loader, ncols=100):
-                pred = self.model(data['input_ids'].to(self.dlconfig.device),
-                                  data['attention_mask'].to(self.dlconfig.device),
-                                  data['token_type_ids'].to(self.dlconfig.device),
-                                  )
-                loss = self.dlconfig.loss_fct(pred, data['label'].to(self.dlconfig.device)).mean()
+                data['input_ids'] = data['input_ids'].to(self.dlconfig.device)
+                data['attention_mask'] = data['attention_mask'].to(self.dlconfig.device)
+                data['token_type_ids'] = data['token_type_ids'].to(self.dlconfig.device)
+                data['label'] = data['label'].to(self.dlconfig.device)
+                pred = self.model(**data)
+                loss = self.dlconfig.loss_fct(pred, data['label']).mean()
                 # 反向传播
                 loss.backward()
                 avg_loss += loss.item() / len(train_loader)
@@ -98,8 +96,7 @@ class PRE_EXCUTER:
                 if self.dlconfig.use_fgm:
                     fgm = FGM(self.model)
                     fgm.attack()
-                    output1 = self.model(**data)
-                    loss_adv = output1[0]
+                    loss_adv = self.model(**data).mean()
                     # 通过扰乱后的embedding训练后得到对抗训练后的loss值，然后反向传播计算对抗后的梯度，累加到前面正常的梯度上，最后再去更新参数
                     loss_adv.backward()
                     fgm.restore()

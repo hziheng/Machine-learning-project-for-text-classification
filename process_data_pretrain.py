@@ -5,7 +5,7 @@
  Author       : Huang zh
  Email        : jacob.hzh@qq.com
  Date         : 2023-03-13 15:09:48
- LastEditTime : 2023-03-13 20:29:59
+ LastEditTime : 2023-03-14 16:53:57
  FilePath     : \\codes\\process_data_pretrain.py
  Description  : data process for pretrain method
 '''
@@ -14,7 +14,7 @@
 from process_data_dl import DataSetProcess
 from trick.dynamic_padding import collater
 from torch.utils.data import Dataset, DataLoader
-from transformers import AutoTokenizer
+from config import MAX_SEQ_LEN
 
 
 class DataSetProcess_pre(DataSetProcess):
@@ -74,11 +74,11 @@ class PREDataset(Dataset):
 
 
 class PRE_Data_Excuter:
-    def __init__(self, model_type, pretrain_file_path):
+    def __init__(self, model_type):
         self.model_type = model_type
+        
+    def process(self,batch_size, train_data_path='', test_data_path='', dev_data_path='', pretrain_file_path=''):
         self.pretrain_file_path = pretrain_file_path
-
-    def process(self,batch_size, train_data_path='', test_data_path='', dev_data_path=''):
         if self.model_type == 'bert':
             from transformers import BertTokenizer
             tokenizer = BertTokenizer.from_pretrained(self.pretrain_file_path)
@@ -91,23 +91,23 @@ class PRE_Data_Excuter:
             self.multi = True
         else:
             self.multi = False
-        collater_fn = collater(pad_index=0)
+        collater_fn = collater(pad_index=0, for_pretrain=True)
         self.train_data_loader = ''
         self.test_data_loader = ''
         self.dev_data_loader = ''
         if train_data_path:
             content = p.trans_data(train_data_path, self.label_dic)
-            data_set = PREDataset(content,tokenizer=tokenizer)
+            data_set = PREDataset(content,tokenizer=tokenizer, max_seq_len=MAX_SEQ_LEN)
             self.train_data_loader = DataLoader(
                 data_set, batch_size=batch_size, shuffle=True, collate_fn=collater_fn)
         if test_data_path:
             content = p.trans_data(test_data_path, self.label_dic)
-            data_set = PREDataset(content,tokenizer=tokenizer)
+            data_set = PREDataset(content,tokenizer=tokenizer, max_seq_len=MAX_SEQ_LEN)
             self.test_data_loader = DataLoader(
                 data_set, batch_size=batch_size, shuffle=False, collate_fn=collater_fn)
         if dev_data_path:
             content = p.trans_data(dev_data_path, self.label_dic)
-            data_set = PREDataset(content,tokenizer=tokenizer)
+            data_set = PREDataset(content,tokenizer=tokenizer, max_seq_len=MAX_SEQ_LEN)
             self.dev_data_loader = DataLoader(
                 data_set, batch_size=batch_size, shuffle=False, collate_fn=collater_fn)
         return len(self.label_dic)

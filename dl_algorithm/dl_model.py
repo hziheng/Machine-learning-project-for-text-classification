@@ -30,7 +30,7 @@ class DL_EXCUTER:
     def __init__(self, dl_config):
         self.dlconfig = dl_config
 
-    def judge_model(self):
+    def judge_model(self, assign_path=''):
         if self.dlconfig.model_name not in DL_MODEL_NAME:
             print('dl model name is not support, please see DL_MODEL_NAME of config.py')
         if self.dlconfig.model_name == 'lstm':

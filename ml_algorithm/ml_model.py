@@ -29,7 +29,7 @@ class ML_EXCUTER:
     def __init__(self, model_name):
         self.model_name = model_name
 
-    def judge_model(self):
+    def judge_model(self, assign_path=''):
         if self.model_name not in ML_MODEL_NAME:
             print('ml model name is not support, please see ML_MODEL_NAME of config.py')
 

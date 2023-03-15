@@ -34,3 +34,5 @@ L2I_SAVE_PATH = './data/label2id.pkl' #  label的映射表
 PRETRAIN_EMBEDDING_FILE = './data/embed.txt'
 
 VERBOSE = 1 # 每隔10个epoch 输出一次训练结果和测试的loss
+
+MAX_SEQ_LEN = 100 # 使用预训练模型时，设置允许每条文本数据的最长长度

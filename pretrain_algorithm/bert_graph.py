@@ -5,7 +5,7 @@
  Author       : Huang zh
  Email        : jacob.hzh@qq.com
  Date         : 2023-03-12 14:39:21
- LastEditTime : 2023-03-14 15:12:46
+ LastEditTime : 2023-03-14 19:20:06
  FilePath     : \\codes\\pretrain_algorithm\\bert_graph.py
  Description  : 
 '''
@@ -42,7 +42,7 @@ class bert_classifier(BertPreTrainedModel):
         self.classifier = nn.Linear(config.hidden_size, self.num_labels)
         self.init_weights()
 
-    def forward(self, input_ids=None, attention_mask=None, token_type_ids=None, labels=None,):
+    def forward(self, input_ids=None, attention_mask=None, token_type_ids=None, label=None,):
         outputs = self.bert(
             input_ids, attention_mask=attention_mask, token_type_ids=token_type_ids)
         '''

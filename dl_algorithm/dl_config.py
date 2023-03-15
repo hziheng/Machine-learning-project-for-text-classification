@@ -63,7 +63,6 @@ class DlConfig:
             self.pad_size = 0
         #==============================#
         elif self.model_name == 'bert':
-            self.pretrain_file_path = './pretrain_model/bert' # 预训练模型的文件地址（模型在transformers官网下载）
             self.use_fgm = True # 是否使用fgm (Fast Gradient Method)
         else:
             pass
