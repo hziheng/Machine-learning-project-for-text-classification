@@ -5,7 +5,7 @@
  Author       : Huang zh
  Email        : jacob.hzh@qq.com
  Date         : 2023-03-09 19:27:58
- LastEditTime : 2023-03-15 10:48:07
+ LastEditTime : 2023-03-16 15:09:28
  FilePath     : \\codes\\main.py
  Description  : 
 '''
@@ -19,7 +19,7 @@ from process_data_dl import DL_Data_Excuter
 from process_data_pretrain import PRE_Data_Excuter
 from metrics import Matrix
 from model import Model_Excuter
-from config import ML_MODEL_NAME, DL_MODEL_NAME, BATCH_SIZE, SPLIT_SIZE, IS_SAMPLE
+from config import ML_MODEL_NAME, DL_MODEL_NAME, PRE_MODEL_NAME, BATCH_SIZE, SPLIT_SIZE, IS_SAMPLE
 from dl_algorithm.dl_config import DlConfig
 from trick.set_all_seed import set_seed
 import warnings
@@ -165,7 +165,7 @@ def main(args):
         args.model_type = 'ML'
     elif args.model_name in DL_MODEL_NAME:
         args.model_type = 'DL'
-    elif args.model_name in 'PRE_MODEL_NAME':
+    elif args.model_name in PRE_MODEL_NAME:
         args.model_type = 'PRE'
     else:
         print('model name error')
