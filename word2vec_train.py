@@ -1,13 +1,15 @@
-#!/usr/bin/env python
-# -*- encoding: utf-8 -*-
+# !usr/bin/env python
+# -*- coding:utf-8 -*-
+
 '''
-@File    : word2vec_train.py
-@Time    : 2023/02/17 09:50:32
-@Author  : Huang zh
-@Contact : jacob.hzh@qq.com
-@Version : 0.1
-@Desc    : 自己训练一个词向量
+ Author       : Huang zh
+ Email        : jacob.hzh@qq.com
+ Date         : 2023-03-19 10:48:29
+ LastEditTime : 2023-03-19 10:54:01
+ FilePath     : \\Machine-learning-project-for-text-classification\\word2vec_train.py
+ Description  : 
 '''
+
 
 
 
@@ -26,6 +28,7 @@ def pickle_read(path):
 
 
 
+# 定义回调函数
 class callback(CallbackAny2Vec):
     def __init__(self):
         self.epoch = 0
