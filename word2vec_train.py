@@ -5,12 +5,10 @@
  Author       : Huang zh
  Email        : jacob.hzh@qq.com
  Date         : 2023-03-19 10:48:29
- LastEditTime : 2023-03-19 10:54:01
+ LastEditTime : 2023-03-19 10:59:57
  FilePath     : \\Machine-learning-project-for-text-classification\\word2vec_train.py
  Description  : 
 '''
-
-
 
 
 import os
