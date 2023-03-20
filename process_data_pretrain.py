@@ -5,7 +5,7 @@
  Author       : Huang zh
  Email        : jacob.hzh@qq.com
  Date         : 2023-03-13 15:09:48
- LastEditTime : 2023-03-14 16:53:57
+ LastEditTime : 2023-03-20 15:26:42
  FilePath     : \\codes\\process_data_pretrain.py
  Description  : data process for pretrain method
 '''
@@ -79,12 +79,13 @@ class PRE_Data_Excuter:
         
     def process(self,batch_size, train_data_path='', test_data_path='', dev_data_path='', pretrain_file_path=''):
         self.pretrain_file_path = pretrain_file_path
-        if self.model_type == 'bert':
+        if self.model_type in ['mac_bert','bert']:
             from transformers import BertTokenizer
             tokenizer = BertTokenizer.from_pretrained(self.pretrain_file_path)
         #! 其他分词器，先不用Autotokenizer这个类
         else:
-            pass
+            print('tokenizer is null, please check model_name')
+            exit()
         p = DataSetProcess_pre(train_data_path, test_data_path, dev_data_path)
         self.label_dic, self.i2l_dic = p.build_label2id(save=True)
         if len(self.label_dic) > 2:

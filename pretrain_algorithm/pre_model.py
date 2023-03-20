@@ -5,7 +5,7 @@
  Author       : Huang zh
  Email        : jacob.hzh@qq.com
  Date         : 2023-03-13 17:10:12
- LastEditTime : 2023-03-15 11:46:10
+ LastEditTime : 2023-03-20 15:19:21
  FilePath     : \\codes\\pretrain_algorithm\\pre_model.py
  Description  : 
 '''
@@ -34,7 +34,8 @@ class PRE_EXCUTER:
         load_path = assign_path
         if self.dlconfig.model_name not in PRE_MODEL_NAME:
             print('pretrain model name is not support, please see PRE_MODEL_NAME of config.py')
-        if self.dlconfig.model_name == 'bert':
+        #* 后续添加模型需要在这里酌情修改对应的方法
+        if self.dlconfig.model_name in ['mac_bert', 'bert']:
             self.pre_config = BertConfig.from_pretrained(os.path.join(load_path, 'config.json'))
             self.pre_config.num_labels = self.dlconfig.nums_label
             self.model = bert_classifier.from_pretrained(os.path.join(
@@ -67,6 +68,7 @@ class PRE_EXCUTER:
             num_warmup_steps = int(
                 self.dlconfig.warmup_prop * self.dlconfig.epochs * len(train_loader))
             num_training_steps = int(self.dlconfig.epochs * len(train_loader))
+            # 由于transformers自带的adamw优化器只实现了权重衰减，因此还要自己调用调度器和做梯度裁剪，下面使用线性调度器
             scheduler = get_linear_schedule_with_warmup(
                 optimizer, num_warmup_steps, num_training_steps)
 
@@ -100,8 +102,9 @@ class PRE_EXCUTER:
                     # 通过扰乱后的embedding训练后得到对抗训练后的loss值，然后反向传播计算对抗后的梯度，累加到前面正常的梯度上，最后再去更新参数
                     loss_adv.backward()
                     fgm.restore()
-
-                torch.nn.utils.clip_grad_norm_(self.model.parameters(), 1.0)  # 对应上面的梯度衰减
+                    
+                if self.dlconfig.update_lr:
+                    torch.nn.utils.clip_grad_norm_(self.model.parameters(), 1.0)  # 对应上面的梯度衰减
 
                 # 更新优化器
                 optimizer.step()

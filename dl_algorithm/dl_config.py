@@ -12,6 +12,7 @@
 import torch
 from process_data_dl import DataSetProcess
 from dl_algorithm.capsules_model import MarginLoss
+from config import PRE_MODEL_NAME
 
 class DlConfig:
     """
@@ -34,7 +35,7 @@ class DlConfig:
         self.dropout = 0.5
         self.epochs = 5
         self.learning_rate = 3e-5
-        self.update_lr = False
+        self.update_lr = True # 是否使用衰减学习率的方法动态更新学习率
         self.warmup_prop = 0.1 # 学习率更新策略系数
         self.loss_type = 'multi' # 'binary, regression, marginLoss, multi'
         self.judge_loss_fct()
@@ -62,7 +63,7 @@ class DlConfig:
             self.iter = 3 # cij 的迭代次数
             self.pad_size = 0
         #==============================#
-        elif self.model_name == 'bert':
+        elif self.model_name in PRE_MODEL_NAME:
             self.use_fgm = True # 是否使用fgm (Fast Gradient Method)
         else:
             pass

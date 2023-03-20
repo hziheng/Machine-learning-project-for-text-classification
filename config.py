@@ -13,7 +13,7 @@ ML_MODEL_NAME = ['lg', 'knn', 'dt', 'rf', 'gbdt', 'xgb', 'catboost', 'svm', 'bay
 
 DL_MODEL_NAME = ['lstm', 'cnn', 'transformer', 'capsules']
 
-PRE_MODEL_NAME = ['bert']
+PRE_MODEL_NAME = ['mac_bert']
 
 BATCH_SIZE = 8
 
