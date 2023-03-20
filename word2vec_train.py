@@ -4,11 +4,12 @@
 '''
  Author       : Huang zh
  Email        : jacob.hzh@qq.com
- Date         : 2023-03-19 10:48:29
- LastEditTime : 2023-03-19 10:59:57
- FilePath     : \\Machine-learning-project-for-text-classification\\word2vec_train.py
+ Date         : 2023-03-20 21:13:24
+ LastEditTime : 2023-03-20 21:21:18
+ FilePath     : \\codes\\word2vec_train.py
  Description  : 
 '''
+
 
 
 import os
