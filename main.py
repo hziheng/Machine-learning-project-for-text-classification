@@ -5,7 +5,7 @@
  Author       : Huang zh
  Email        : jacob.hzh@qq.com
  Date         : 2023-03-09 19:27:58
- LastEditTime : 2023-03-20 16:16:29
+ LastEditTime : 2023-03-21 15:47:43
  FilePath     : \\codes\\main.py
  Description  : 
 '''
@@ -14,6 +14,7 @@ import os
 os.environ["CUDA_VISIBLE_DEVICES"] = '0'
 
 import argparse
+import transformers
 from process_data_ml import ML_Data_Excuter
 from process_data_dl import DL_Data_Excuter
 from process_data_pretrain import PRE_Data_Excuter
@@ -26,7 +27,7 @@ import warnings
 
 
 warnings.filterwarnings("ignore")
-
+transformers.logging.set_verbosity_error()
 
 # def set_args():
 #     parser = argparse.ArgumentParser()
@@ -57,11 +58,11 @@ def set_args():
     parser = argparse.ArgumentParser()
     parser.add_argument('--data_path', help='data path', default='', type=str)
     parser.add_argument(
-        '--model_name', help='model name ex: knn', default='mac_bert', type=str)
+        '--model_name', help='model name ex: knn', default='bert_wwm', type=str)
     parser.add_argument(
         '--model_saved_path', help='the path of model saved', default='./save_model/mac_bert', type=str)
     parser.add_argument(
-        '--type_obj', help='need train or test or only predict', default='test', type=str)
+        '--type_obj', help='need train or test or only predict', default='train', type=str)
     parser.add_argument('--train_data_path',
                         help='train set', default='./data/dl_data/test.csv', type=str)
     parser.add_argument('--test_data_path',

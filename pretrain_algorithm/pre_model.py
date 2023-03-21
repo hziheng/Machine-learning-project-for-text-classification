@@ -5,7 +5,7 @@
  Author       : Huang zh
  Email        : jacob.hzh@qq.com
  Date         : 2023-03-13 17:10:12
- LastEditTime : 2023-03-20 15:19:21
+ LastEditTime : 2023-03-21 15:32:37
  FilePath     : \\codes\\pretrain_algorithm\\pre_model.py
  Description  : 
 '''
@@ -35,7 +35,7 @@ class PRE_EXCUTER:
         if self.dlconfig.model_name not in PRE_MODEL_NAME:
             print('pretrain model name is not support, please see PRE_MODEL_NAME of config.py')
         #* 后续添加模型需要在这里酌情修改对应的方法
-        if self.dlconfig.model_name in ['mac_bert', 'bert']:
+        if self.dlconfig.model_name in ['mac_bert', 'bert', 'bert_wwm']:
             self.pre_config = BertConfig.from_pretrained(os.path.join(load_path, 'config.json'))
             self.pre_config.num_labels = self.dlconfig.nums_label
             self.model = bert_classifier.from_pretrained(os.path.join(

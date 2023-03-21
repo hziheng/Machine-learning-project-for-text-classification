@@ -5,7 +5,7 @@
  Author       : Huang zh
  Email        : jacob.hzh@qq.com
  Date         : 2023-03-13 15:09:48
- LastEditTime : 2023-03-20 15:26:42
+ LastEditTime : 2023-03-21 15:33:28
  FilePath     : \\codes\\process_data_pretrain.py
  Description  : data process for pretrain method
 '''
@@ -79,7 +79,8 @@ class PRE_Data_Excuter:
         
     def process(self,batch_size, train_data_path='', test_data_path='', dev_data_path='', pretrain_file_path=''):
         self.pretrain_file_path = pretrain_file_path
-        if self.model_type in ['mac_bert','bert']:
+        #* 分词器的设置，不同模型不一样的分词器
+        if self.model_type in ['mac_bert','bert', 'bert_wwm']:
             from transformers import BertTokenizer
             tokenizer = BertTokenizer.from_pretrained(self.pretrain_file_path)
         #! 其他分词器，先不用Autotokenizer这个类
