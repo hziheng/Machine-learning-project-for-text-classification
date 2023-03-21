@@ -32,6 +32,10 @@ class DlConfig:
             self.embedding_matrix, dim = DataSetProcess().load_emb(vocab_dict)
             self.embedding_size = dim
         self.device = 'cuda' if torch.cuda.is_available() else 'cpu'
+        # 针对mac m1 m2芯片，使用mps加速代码
+        if torch.backends.mps.is_available():
+            self.device = 'mps'
+            print(f'use device: {self.device}')
         self.dropout = 0.5
         self.epochs = 5
         self.learning_rate = 3e-5
