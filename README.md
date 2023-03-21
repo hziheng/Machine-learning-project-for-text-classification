@@ -148,9 +148,15 @@ python main.py --dev_data_path ./data/processed_data.csv --model_saved_path ./sa
 ***示例***
 ```
 # 训练
+# python main.py --model_name mac_bert --model_saved_path ./save_model/mac_bert --type_obj train --train_data_path ./data/dl_data/train.csv --test_data_path ./data/dl_data/test.csv --pretrain_file_path ./pretrain_model/mac_bert/
 # 测试
+# python main.py --model_name mac_bert --model_saved_path ./save_model/mac_bert --type_obj test --test_data_path ./data/dl_data/test.csv
 # 预测
+# python main.py --model_name mac_bert --model_saved_path ./save_model/mac_bert --type_obj predict --test_data_path ./data/dl_data/dev.csv
 ```
+***运行结果如下：***
+
+![result3.png](pic/pretrain_pic.png)
 ### Note：
 >> **常见的机器学习算法调参在 ml_algorithm/ml_moel.py下<br>深度神经网络/预训练模型的调参在 dl_algorithm/dl_config.py下<br>其他全局参数调参在 ./config.py下<br>从transformers官网下载的预训练模型放在pretrain_model/下**
 
@@ -164,4 +170,4 @@ python main.py --dev_data_path ./data/processed_data.csv --model_saved_path ./sa
 |9. CatBOOST||9. 模型训练代码<br>10. 模型评估代码<br>11. 添加早停机制<br>12. 参数优化|
 |||13. 解决Lstm的输出bug<br>14. 完成test,predict模块<br>15. main函数优化<br>16. 新增预训练词向量的载入功能|
 |||17. 深度学习下，输入单个数据集，自动进行数据切分及下采样，无需人工划分和采样（**todo**）<br>18. 英文文本分类待添加，主要体现在分词部分（**todo**）<br>19. 添加竞赛trick【FGM、PGD、EMA】策略<br>20. 添加竞赛trick【将bert的cls输出修改为中间多层embed的输出加权平均，详情看bert_graph.py|
-|||21. 所有代码的关键地方添加注释，方便理解修改代码<br>完善readme文档|
+|||21. 所有代码的关键地方添加注释，方便理解修改代码<br>完善readme文档<br>添加mac电脑m系列芯片加速支持|
