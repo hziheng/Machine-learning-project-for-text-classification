@@ -5,7 +5,7 @@
  Author       : Huang zh
  Email        : jacob.hzh@qq.com
  Date         : 2023-03-13 15:09:48
- LastEditTime : 2023-03-21 15:33:28
+ LastEditTime : 2023-03-21 19:51:13
  FilePath     : \\codes\\process_data_pretrain.py
  Description  : data process for pretrain method
 '''
@@ -15,6 +15,7 @@ from process_data_dl import DataSetProcess
 from trick.dynamic_padding import collater
 from torch.utils.data import Dataset, DataLoader
 from config import MAX_SEQ_LEN
+from transformers import AutoTokenizer
 
 
 class DataSetProcess_pre(DataSetProcess):
@@ -80,13 +81,14 @@ class PRE_Data_Excuter:
     def process(self,batch_size, train_data_path='', test_data_path='', dev_data_path='', pretrain_file_path=''):
         self.pretrain_file_path = pretrain_file_path
         #* 分词器的设置，不同模型不一样的分词器
-        if self.model_type in ['mac_bert','bert', 'bert_wwm']:
-            from transformers import BertTokenizer
-            tokenizer = BertTokenizer.from_pretrained(self.pretrain_file_path)
-        #! 其他分词器，先不用Autotokenizer这个类
-        else:
-            print('tokenizer is null, please check model_name')
-            exit()
+        # if self.model_type in ['mac_bert','bert', 'bert_wwm', 'nezha_wwm']:
+        #     from transformers import BertTokenizer
+        #     tokenizer = BertTokenizer.from_pretrained(self.pretrain_file_path)
+        # #// 其他分词器，先不用Autotokenizer这个类
+        # else:
+        #     print('tokenizer is null, please check model_name')
+        #     exit()
+        tokenizer = AutoTokenizer.from_pretrained(self.pretrain_file_path)
         p = DataSetProcess_pre(train_data_path, test_data_path, dev_data_path)
         self.label_dic, self.i2l_dic = p.build_label2id(save=True)
         if len(self.label_dic) > 2:

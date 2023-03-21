@@ -5,7 +5,7 @@
  Author       : Huang zh
  Email        : jacob.hzh@qq.com
  Date         : 2023-03-13 17:10:12
- LastEditTime : 2023-03-21 15:32:37
+ LastEditTime : 2023-03-21 19:55:08
  FilePath     : \\codes\\pretrain_algorithm\\pre_model.py
  Description  : 
 '''
@@ -21,7 +21,9 @@ from common import get_time_dif
 from config import PRE_MODEL_NAME, VERBOSE
 from metrics import Matrix
 from pretrain_algorithm.bert_graph import bert_classifier
-from transformers import BertConfig
+from pretrain_algorithm.nezha_graph import nezha_classify
+from pretrain_algorithm.roberta_wwm import roberta_classify
+from transformers import BertConfig, NezhaConfig, RobertaConfig
 from trick.early_stop import EarlyStopping
 from trick.fgm_pgd_ema import FGM
 
@@ -40,6 +42,17 @@ class PRE_EXCUTER:
             self.pre_config.num_labels = self.dlconfig.nums_label
             self.model = bert_classifier.from_pretrained(os.path.join(
                 load_path, 'pytorch_model.bin'), config=self.pre_config)
+        elif self.dlconfig.model_name == 'nezha_wwm':
+            self.pre_config = NezhaConfig.from_pretrained(os.path.join(load_path, 'config.json'))
+            self.pre_config.num_labels = self.dlconfig.nums_label
+            self.model = nezha_classify.from_pretrained(os.path.join(
+                load_path, 'pytorch_model.bin'), config=self.pre_config)
+        elif self.dlconfig.model_name == 'roberta_wwm':
+            self.pre_config = RobertaConfig.from_pretrained(os.path.join(load_path, 'config.json'))
+            self.pre_config.num_labels = self.dlconfig.nums_label
+            self.model = roberta_classify.from_pretrained(os.path.join(
+                load_path, 'pytorch_model.bin'), config=self.pre_config)
+
         #! 其他模型
         else:
             pass
