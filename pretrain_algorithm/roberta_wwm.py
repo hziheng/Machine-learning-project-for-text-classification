@@ -5,7 +5,7 @@
  Author       : Huang zh
  Email        : jacob.hzh@qq.com
  Date         : 2023-03-21 19:14:06
- LastEditTime : 2023-03-21 19:54:49
+ LastEditTime : 2023-03-22 11:06:19
  FilePath     : \\codes\\pretrain_algorithm\\roberta_wwm.py
  Description  : 
 '''
@@ -53,7 +53,7 @@ class roberta_classify(RobertaPreTrainedModel):
             output_hidden_states=True
         )
 
-        hidden_layers = outputs[2]
+        hidden_layers = outputs[1]
 
         cls_outputs = torch.stack(
             [self.dropout(layer[:, 0, :]) for layer in hidden_layers], dim=2
