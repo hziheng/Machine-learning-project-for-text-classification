@@ -143,6 +143,8 @@ python main.py --dev_data_path ./data/processed_data.csv --model_saved_path ./sa
 
 由于采用的数据是多分类，画的图比较乱，多分类暂时不输出图
 
+***训练过程指标参数变化可视化展示：***
+![result3.png](pic/tensorboard.png)
 
 ### 3.3 针对预训练模型
 ***示例***
@@ -158,7 +160,7 @@ python main.py --dev_data_path ./data/processed_data.csv --model_saved_path ./sa
 
 ![result3.png](pic/pretrain_pic.png)
 ### Note：
->> **常见的机器学习算法调参在 ml_algorithm/ml_moel.py下<br>深度神经网络/预训练模型的调参在 dl_algorithm/dl_config.py下<br>其他全局参数调参在 ./config.py下<br>从transformers官网下载的预训练模型放在pretrain_model/下**
+>> **常见的机器学习算法调参在 ml_algorithm/ml_moel.py下<br>深度神经网络/预训练模型的调参在 dl_algorithm/dl_config.py下<br>其他全局参数调参在 ./config.py下<br>从transformers官网下载的预训练模型放在pretrain_model/下<br>在运行代码后，新建一个终端输出’tensorboard --logdir logs‘，然后打开浏览器输入 http://localhost:6006 可以看到训练过程中的f1、loss、learning rate的变化，具体使用教程网上搜索tensorboard**
 
 ## 文件目录介绍
 
@@ -171,3 +173,4 @@ python main.py --dev_data_path ./data/processed_data.csv --model_saved_path ./sa
 |||13. 解决Lstm的输出bug<br>14. 完成test,predict模块<br>15. main函数优化<br>16. 新增预训练词向量的载入功能|
 |||17. 深度学习下，输入单个数据集，自动进行数据切分及下采样，无需人工划分和采样（**todo**）<br>18. 英文文本分类待添加，主要体现在分词部分（**todo**）<br>19. 添加竞赛trick【FGM、PGD、EMA】策略<br>20. 添加竞赛trick【将bert的cls输出修改为中间多层embed的输出加权平均，详情看bert_graph.py|
 |||21. 所有代码的关键地方添加注释，方便理解修改代码<br>22. 完善readme文档<br>23. 添加mac电脑m系列芯片加速支持<br>24. 优化代码逻辑|
+|||25. 利用tensorboardx的添加可视化过程|

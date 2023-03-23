@@ -5,7 +5,7 @@
  Author       : Huang zh
  Email        : jacob.hzh@qq.com
  Date         : 2023-03-09 19:27:58
- LastEditTime : 2023-03-21 20:18:33
+ LastEditTime : 2023-03-23 15:16:11
  FilePath     : \\codes\\main.py
  Description  : 
 '''
@@ -58,9 +58,9 @@ def set_args():
     parser = argparse.ArgumentParser()
     parser.add_argument('--data_path', help='data path', default='', type=str)
     parser.add_argument(
-        '--model_name', help='model name ex: knn', default='roberta_wwm', type=str)
+        '--model_name', help='model name ex: knn', default='transformer', type=str)
     parser.add_argument(
-        '--model_saved_path', help='the path of model saved', default='./save_model/roberta_wwm', type=str)
+        '--model_saved_path', help='the path of model saved', default='./save_model/transformer', type=str)
     parser.add_argument(
         '--type_obj', help='need train or test or only predict', default='train', type=str)
     parser.add_argument('--train_data_path',

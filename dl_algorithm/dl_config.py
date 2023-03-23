@@ -37,7 +37,7 @@ class DlConfig:
             self.device = 'mps'
             print(f'use device: {self.device}')
         self.dropout = 0.5
-        self.epochs = 5
+        self.epochs = 10
         self.learning_rate = 3e-5
         self.update_lr = True # 是否使用衰减学习率的方法动态更新学习率
         self.warmup_prop = 0.1 # 学习率更新策略系数

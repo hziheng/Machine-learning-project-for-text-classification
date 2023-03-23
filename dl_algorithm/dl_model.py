@@ -24,6 +24,7 @@ from dl_algorithm.capsules_model import capsules_model
 from trick.init_model import init_network
 from trick.early_stop import EarlyStopping
 from common import get_time_dif
+from tensorboardX import SummaryWriter
 
 
 class DL_EXCUTER:
@@ -53,6 +54,8 @@ class DL_EXCUTER:
         # 设置优化器
         optimizer = torch.optim.AdamW(self.model.parameters(), lr=self.dlconfig.learning_rate)
         best_test_f1 = 0
+        # 定义一个summarywriter对象，用来可视化
+        writer = SummaryWriter(logdir='./logs')
         # 学习率指数衰减，每次epoch：学习率 = gamma * 学习率
         # scheduler = torch.optim.lr_scheduler.ExponentialLR(optimizer, gamma=0.9)
 
@@ -74,7 +77,7 @@ class DL_EXCUTER:
             start_time = time.time()
             avg_loss = 0
             first_epoch_eval = 0
-            for data in tqdm(train_loader, ncols=100):
+            for index, data in enumerate(tqdm(train_loader, ncols=100)):
                 pred = self.model(data['input_ids'].to(self.dlconfig.device))
                 loss = self.dlconfig.loss_fct(pred, data['label'].to(self.dlconfig.device)).mean()
                 # 反向传播
@@ -90,8 +93,6 @@ class DL_EXCUTER:
                 # 用以下方式替代model.zero_grad()，可以提高gpu利用率
                 for param in self.model.parameters():
                     param.grad = None
-            
-
             
             # 计算模型运行时间
             elapsed_time = get_time_dif(start_time)
@@ -111,9 +112,13 @@ class DL_EXCUTER:
                 )
 
                 if (epoch + 1 >= first_epoch_eval) or (epoch + 1 == self.dlconfig.epochs):
-                    tqdm.write(f"val_loss={avg_test_loss:.3f}\ttest_f1={test_f1:.4f}\t lr={lr:.1e}")
+                    tqdm.write(f"val_loss={avg_test_loss:.3f}\ttest_f1={test_f1:.4f}")
                 else:
                     tqdm.write("")
+            writer.add_scalar('Loss/train', avg_loss, epoch)
+            writer.add_scalar('Loss/test', avg_test_loss, epoch)
+            writer.add_scalar('F1/test', test_f1, epoch)
+            writer.add_scalar('lr/train', lr, epoch)
             
             # 每次保存最优的模型，以测试集f1为准
             if best_test_f1 < test_f1:
@@ -131,6 +136,7 @@ class DL_EXCUTER:
         # 释放内存
         gc.collect()
         torch.cuda.empty_cache()
+        writer.close()
 
 
     def evaluate(self, test_loader):

@@ -5,7 +5,7 @@
  Author       : Huang zh
  Email        : jacob.hzh@qq.com
  Date         : 2023-03-13 17:10:12
- LastEditTime : 2023-03-21 19:55:08
+ LastEditTime : 2023-03-23 16:12:19
  FilePath     : \\codes\\pretrain_algorithm\\pre_model.py
  Description  : 
 '''
@@ -26,6 +26,7 @@ from pretrain_algorithm.roberta_wwm import roberta_classify
 from transformers import BertConfig, NezhaConfig, RobertaConfig
 from trick.early_stop import EarlyStopping
 from trick.fgm_pgd_ema import FGM
+from tensorboardX import SummaryWriter
 
 
 class PRE_EXCUTER:
@@ -72,6 +73,7 @@ class PRE_EXCUTER:
         optimizer = torch.optim.AdamW(
             optimizer_grouped_parameters, lr=self.dlconfig.learning_rate)
         best_test_f1 = 0
+        writer = SummaryWriter(logdir='./logs')
         # 学习率指数衰减，每次epoch：学习率 = gamma * 学习率
         # scheduler = torch.optim.lr_scheduler.ExponentialLR(optimizer, gamma=0.9)
 
@@ -152,6 +154,10 @@ class PRE_EXCUTER:
                         f"val_loss={avg_test_loss:.3f}\ttest_f1={test_f1:.4f}\t lr={lr:.1e}")
                 else:
                     tqdm.write("")
+            writer.add_scalar('Loss/train', avg_loss, epoch)
+            writer.add_scalar('Loss/test', avg_test_loss, epoch)
+            writer.add_scalar('F1/test', test_f1, epoch)
+            writer.add_scalar('lr/train', lr, epoch)
 
             # 每次保存最优的模型，以测试集f1为准
             if best_test_f1 < test_f1:
@@ -169,6 +175,7 @@ class PRE_EXCUTER:
         # 释放内存
         gc.collect()
         torch.cuda.empty_cache()
+        writer.close()
 
     def evaluate(self, test_loader):
         pre_all = []
