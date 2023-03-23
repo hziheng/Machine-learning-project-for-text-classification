@@ -1,5 +1,6 @@
 # .gitignore
 data/
+logs/
 */__pycache__
 visualization_data.ipynb
 cs.py
